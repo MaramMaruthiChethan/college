@@ -195,7 +195,6 @@ Example backend env:
 PORT=4000
 DATABASE_URL=postgresql://localhost:5432/college_decision
 FRONTEND_URL=http://localhost:3000
-DUMMY_USER_ID=demo-user
 ```
 
 Example frontend env:
@@ -310,7 +309,6 @@ npm run start
 ```env
 DATABASE_URL=your_hosted_postgres_url
 FRONTEND_URL=https://your-vercel-app.vercel.app
-DUMMY_USER_ID=demo-user
 ```
 
 Blueprint file included:

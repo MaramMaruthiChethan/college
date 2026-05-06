@@ -10,5 +10,3 @@ services:
         sync: false
       - key: FRONTEND_URL
         sync: false
-      - key: DUMMY_USER_ID
-        value: demo-user
