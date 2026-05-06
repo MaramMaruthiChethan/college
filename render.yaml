@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: college-decision-api
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: DUMMY_USER_ID
+        value: demo-user
