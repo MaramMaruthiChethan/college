@@ -32,6 +32,15 @@ export default async function SavedPage() {
       </div>
     );
   } catch (error) {
+    if (error instanceof Error && error.message === "Login required") {
+      return (
+        <EmptyState
+          title="Login required"
+          description="Sign in first to save and revisit your shortlist."
+        />
+      );
+    }
+
     return (
       <ErrorState
         message={error instanceof Error ? error.message : "Unable to load saved colleges."}

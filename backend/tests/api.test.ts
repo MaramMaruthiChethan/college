@@ -7,6 +7,7 @@ import { pool } from "../src/utils/db.js";
 
 let server: ReturnType<typeof app.listen>;
 let baseUrl = "";
+let userId = "";
 
 async function resetDatabase() {
   const workspaceRoot = path.resolve(process.cwd(), "..");
@@ -42,7 +43,9 @@ after(async () => {
 });
 
 test("GET /colleges returns paginated data with course enrichment", async () => {
-  const response = await fetch(`${baseUrl}/colleges?city=Bengaluru&course=Data%20Science&limit=5&page=1`);
+  const response = await fetch(
+    `${baseUrl}/colleges?search=data&city=Bengaluru&course=Data%20Science&limit=5&page=1`
+  );
   const json = await response.json();
 
   assert.equal(response.status, 200);
@@ -52,6 +55,23 @@ test("GET /colleges returns paginated data with course enrichment", async () => 
   assert.ok(Array.isArray(json.data.items[0].courses));
   assert.deepEqual(json.data.filters.cities, ["Bengaluru"]);
   assert.deepEqual(json.data.filters.courses, ["Data Science"]);
+});
+
+test("POST /auth/login creates or returns a user", async () => {
+  const response = await fetch(`${baseUrl}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: "Maruthi",
+      email: "maruthi@example.com"
+    })
+  });
+  const json = await response.json();
+
+  assert.equal(response.status, 201);
+  assert.equal(json.success, true);
+  assert.equal(json.data.email, "maruthi@example.com");
+  userId = json.data.id;
 });
 
 test("GET /colleges/meta returns API-driven filter options", async () => {
@@ -84,13 +104,28 @@ test("GET /compare rejects invalid id counts", async () => {
   assert.equal(json.success, false);
 });
 
+test("GET /saved requires login", async () => {
+  const response = await fetch(`${baseUrl}/saved`);
+  const json = await response.json();
+
+  assert.equal(response.status, 401);
+  assert.equal(json.success, false);
+});
+
 test("POST /save and GET /saved persist shortlist entries", async () => {
   const saveResponse = await fetch(`${baseUrl}/save`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "x-user-id": userId
+    },
     body: JSON.stringify({ college_id: 3 })
   });
-  const savedResponse = await fetch(`${baseUrl}/saved`);
+  const savedResponse = await fetch(`${baseUrl}/saved`, {
+    headers: {
+      "x-user-id": userId
+    }
+  });
   const savedJson = await savedResponse.json();
 
   assert.equal(saveResponse.status, 201);

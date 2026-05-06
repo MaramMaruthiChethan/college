@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { type NextFunction, type Request, type Response } from "express";
+import { authRouter } from "./routes/authRoutes.js";
 import { getComparedColleges } from "./controllers/collegesController.js";
 import { collegesRouter } from "./routes/collegesRoutes.js";
 import { savedRouter } from "./routes/savedRoutes.js";
@@ -24,6 +25,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.get("/compare", asyncHandler(getComparedColleges));
+app.use("/", authRouter);
 app.use("/colleges", collegesRouter);
 app.use("/", savedRouter);
 

@@ -1,5 +1,4 @@
 import type { SavedCollege } from "../models/college.js";
-import { DUMMY_USER_ID } from "../utils/constants.js";
 import { pool } from "../utils/db.js";
 import { HttpError } from "../utils/httpError.js";
 
@@ -31,7 +30,7 @@ function deriveDecisionTags(college: {
   return tags.length > 0 ? tags : ["Balanced choice"];
 }
 
-export async function saveCollege(collegeId: number) {
+export async function saveCollege(userId: string, collegeId: number) {
   const existsResult = (await pool.query(
     "SELECT id FROM colleges WHERE id = $1",
     [collegeId]
@@ -48,13 +47,13 @@ export async function saveCollege(collegeId: number) {
       ON CONFLICT (user_id, college_id) DO UPDATE SET user_id = EXCLUDED.user_id
       RETURNING id, user_id, college_id
     `,
-    [DUMMY_USER_ID, collegeId]
+    [userId, collegeId]
   )) as { rows: Array<{ id: number; user_id: string; college_id: number }> };
 
   return insertResult.rows[0];
 }
 
-export async function getSavedColleges() {
+export async function getSavedColleges(userId: string) {
   const result = (await pool.query(
     `
       SELECT
@@ -84,7 +83,7 @@ export async function getSavedColleges() {
       WHERE sc.user_id = $1
       ORDER BY sc.id DESC
     `,
-    [DUMMY_USER_ID]
+    [userId]
   )) as { rows: SavedCollege[] };
 
   return result.rows.map((row: SavedCollege) => ({

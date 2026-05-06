@@ -37,7 +37,7 @@ export default async function CollegesPage({
           <p className="text-sm uppercase tracking-[0.18em] text-pine/70">College listing</p>
           <h1 className="mt-3 font-display text-4xl font-semibold text-ink">Find colleges that fit your decision criteria</h1>
           <div className="mt-6">
-            <SearchForm initialValue={result.filters.search} />
+            <SearchForm initialValue={result.filters.search} baseParams={paramsObject} />
           </div>
         </section>
 

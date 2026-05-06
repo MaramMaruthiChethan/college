@@ -28,7 +28,20 @@ function buildWhereClause(filters: CollegeFilters) {
 
   if (filters.search) {
     values.push(`%${filters.search}%`);
-    conditions.push(`c.name ILIKE $${values.length}`);
+    conditions.push(`
+      (
+        c.name ILIKE $${values.length}
+        OR c.city ILIKE $${values.length}
+        OR c.state ILIKE $${values.length}
+        OR EXISTS (
+          SELECT 1
+          FROM college_courses search_cc
+          INNER JOIN courses search_cr ON search_cr.id = search_cc.course_id
+          WHERE search_cc.college_id = c.id
+          AND search_cr.name ILIKE $${values.length}
+        )
+      )
+    `);
   }
 
   if (filters.cities.length > 0) {

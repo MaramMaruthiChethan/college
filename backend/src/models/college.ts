@@ -18,6 +18,12 @@ export interface SavedCollegeRecord {
   college_id: number;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
 export interface SavedCollege extends College {
   saved_id: number;
 }

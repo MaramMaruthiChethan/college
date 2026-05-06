@@ -25,9 +25,15 @@ CREATE TABLE IF NOT EXISTS college_courses (
   UNIQUE (college_id, course_id)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+  id VARCHAR(50) PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(200) NOT NULL UNIQUE
+);
+
 CREATE TABLE IF NOT EXISTS saved_colleges (
   id SERIAL PRIMARY KEY,
-  user_id VARCHAR(100) NOT NULL,
+  user_id VARCHAR(50) NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   college_id INTEGER NOT NULL REFERENCES colleges(id) ON DELETE CASCADE,
   UNIQUE (user_id, college_id)
 );

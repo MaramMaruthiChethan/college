@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GraduationCap } from "lucide-react";
+import { AuthButton } from "./auth-button";
 
 export function Header() {
   return (
@@ -15,7 +16,8 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="flex items-center gap-2 text-sm font-medium text-ink/75">
+        <div className="flex items-center gap-3">
+          <nav className="flex items-center gap-2 text-sm font-medium text-ink/75">
           <Link href="/colleges" className="rounded-full px-4 py-2 hover:bg-moss">
             Explore
           </Link>
@@ -25,7 +27,9 @@ export function Header() {
           <Link href="/saved" className="rounded-full px-4 py-2 hover:bg-moss">
             Saved
           </Link>
-        </nav>
+          </nav>
+          <AuthButton />
+        </div>
       </div>
     </header>
   );

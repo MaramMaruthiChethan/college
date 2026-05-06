@@ -43,6 +43,11 @@ const saveBodySchema = z.object({
   college_id: z.coerce.number().int().positive()
 });
 
+const loginBodySchema = z.object({
+  name: z.string().trim().min(2).max(100),
+  email: z.string().trim().email().max(200)
+});
+
 const compareSchema = z.object({
   ids: z.string().trim().min(1)
 });
@@ -70,6 +75,16 @@ export function parseSaveBody(body: unknown) {
 
   if (!parsed.success) {
     throw new HttpError(400, "Invalid request body");
+  }
+
+  return parsed.data;
+}
+
+export function parseLoginBody(body: unknown) {
+  const parsed = loginBodySchema.safeParse(body);
+
+  if (!parsed.success) {
+    throw new HttpError(400, "Invalid login details");
   }
 
   return parsed.data;

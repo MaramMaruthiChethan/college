@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { getUserIdFromCookieString } from "../lib/auth.js";
 import {
   formatCurrency,
   formatPercentage,
@@ -31,4 +32,11 @@ test("decision score rewards stronger outcomes", () => {
   });
 
   assert.ok(stronger > weaker);
+});
+
+test("cookie parsing extracts the authenticated user id", () => {
+  assert.equal(
+    getUserIdFromCookieString("foo=bar; college_user_id=user_123; theme=light"),
+    "user_123"
+  );
 });

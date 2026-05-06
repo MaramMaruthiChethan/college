@@ -1,6 +1,7 @@
 TRUNCATE TABLE college_courses RESTART IDENTITY CASCADE;
 TRUNCATE TABLE courses RESTART IDENTITY CASCADE;
 TRUNCATE TABLE saved_colleges RESTART IDENTITY CASCADE;
+TRUNCATE TABLE users RESTART IDENTITY CASCADE;
 TRUNCATE TABLE colleges RESTART IDENTITY CASCADE;
 
 INSERT INTO colleges (name, city, state, fees_range, rating, placement_percentage, avg_package, ranking) VALUES

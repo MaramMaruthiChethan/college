@@ -1,22 +1,48 @@
 "use client";
 
+import type { Route } from "next";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useState, useTransition, type FormEvent } from "react";
 
-export function SearchForm({ initialValue = "" }: { initialValue?: string }) {
+export function SearchForm({
+  initialValue = "",
+  baseParams
+}: {
+  initialValue?: string;
+  baseParams?: Record<string, string | string[] | undefined>;
+}) {
   const router = useRouter();
   const [search, setSearch] = useState(initialValue);
+  const [isPending, startTransition] = useTransition();
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const params = new URLSearchParams();
 
-    if (search.trim()) {
-      params.set("search", search.trim());
+    Object.entries(baseParams ?? {}).forEach(([key, value]) => {
+      if (!value || key === "search" || key === "page") {
+        return;
+      }
+
+      if (Array.isArray(value)) {
+        value.forEach((entry) => params.append(key, entry));
+        return;
+      }
+
+      params.set(key, value);
+    });
+
+    const nextSearch = search.trim();
+    if (nextSearch) {
+      params.set("search", nextSearch);
     }
 
-    router.push(`/colleges?${params.toString()}`);
+    const href = (params.toString() ? `/colleges?${params.toString()}` : "/colleges") as Route;
+
+    startTransition(() => {
+      router.push(href);
+    });
   }
 
   return (
@@ -32,9 +58,10 @@ export function SearchForm({ initialValue = "" }: { initialValue?: string }) {
       </div>
       <button
         type="submit"
+        disabled={isPending}
         className="rounded-3xl bg-pine px-6 py-4 text-sm font-semibold text-white transition hover:bg-pine/90"
       >
-        Find colleges
+        {isPending ? "Searching..." : "Find colleges"}
       </button>
     </form>
   );
