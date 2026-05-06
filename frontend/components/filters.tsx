@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useTransition, useState, type Dispatch, type SetStateAction } from "react";
 
 interface FiltersProps {
   cityOptions: string[];
@@ -11,6 +11,7 @@ interface FiltersProps {
 export function Filters({ cityOptions, courseOptions }: FiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
   const [selectedCities, setSelectedCities] = useState<string[]>(searchParams.getAll("city"));
   const [selectedCourses, setSelectedCourses] = useState<string[]>(searchParams.getAll("course"));
   const [maxFees, setMaxFees] = useState(searchParams.get("max_fees") ?? "");
@@ -18,10 +19,13 @@ export function Filters({ cityOptions, courseOptions }: FiltersProps) {
 
   function updateSelection(
     setter: Dispatch<SetStateAction<string[]>>,
-    currentValues: string[],
     value: string
   ) {
-    setter(currentValues.includes(value) ? currentValues.filter((item) => item !== value) : [...currentValues, value]);
+    setter((currentValues) =>
+      currentValues.includes(value)
+        ? currentValues.filter((item) => item !== value)
+        : [...currentValues, value]
+    );
   }
 
   function applyFilters() {
@@ -45,7 +49,9 @@ export function Filters({ cityOptions, courseOptions }: FiltersProps) {
       params.delete("min_rating");
     }
 
-    router.push(`/colleges?${params.toString()}`);
+    startTransition(() => {
+      router.push(`/colleges?${params.toString()}`);
+    });
   }
 
   return (
@@ -61,7 +67,7 @@ export function Filters({ cityOptions, courseOptions }: FiltersProps) {
               <button
                 key={city}
                 type="button"
-                onClick={() => updateSelection(setSelectedCities, selectedCities, city)}
+                onClick={() => updateSelection(setSelectedCities, city)}
                 className={`rounded-full px-3 py-2 text-sm ${
                   active ? "bg-pine text-white" : "bg-field text-ink"
                 }`}
@@ -82,7 +88,7 @@ export function Filters({ cityOptions, courseOptions }: FiltersProps) {
               <button
                 key={course}
                 type="button"
-                onClick={() => updateSelection(setSelectedCourses, selectedCourses, course)}
+                onClick={() => updateSelection(setSelectedCourses, course)}
                 className={`rounded-full px-3 py-2 text-sm ${
                   active ? "bg-amber text-white" : "bg-field text-ink"
                 }`}
@@ -118,9 +124,10 @@ export function Filters({ cityOptions, courseOptions }: FiltersProps) {
       <button
         type="button"
         onClick={applyFilters}
+        disabled={isPending}
         className="mt-6 w-full rounded-2xl bg-pine px-4 py-3 text-sm font-semibold text-white"
       >
-        Apply filters
+        {isPending ? "Applying..." : "Apply filters"}
       </button>
     </aside>
   );
