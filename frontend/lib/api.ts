@@ -9,6 +9,7 @@ import type {
 import { getUserIdFromCookieString, type AuthUser } from "./auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+const REQUEST_TIMEOUT_MS = 15000;
 
 interface RequestOptions extends RequestInit {
   nextOptions?: {
@@ -42,13 +43,28 @@ async function resolveHeaders(initHeaders?: HeadersInit) {
 
 async function request<T>(path: string, init?: RequestOptions): Promise<T> {
   const headers = await resolveHeaders(init?.headers);
-  const response = await fetch(`${API_URL}${path}`, {
-    ...init,
-    headers,
-    cache: init?.cache ?? "no-store",
-    next: init?.nextOptions,
-    signal: AbortSignal.timeout(5000)
-  });
+  let response: Response;
+
+  try {
+    // Render free instances can take several seconds to wake up on the first request.
+    response = await fetch(`${API_URL}${path}`, {
+      ...init,
+      headers,
+      cache: init?.cache ?? "no-store",
+      next: init?.nextOptions,
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+    });
+  } catch (error) {
+    if (error instanceof Error && error.name === "TimeoutError") {
+      throw new Error("The backend is waking up. Please retry in a few seconds.");
+    }
+
+    if (error instanceof Error && error.name === "AbortError") {
+      throw new Error("The backend took too long to respond. Please retry.");
+    }
+
+    throw new Error("Unable to reach the backend right now.");
+  }
 
   const json = (await response.json()) as ApiSuccess<T> | ApiFailure;
 
