@@ -124,7 +124,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
 endobj
 6 0 obj
-<< /Length 2471 >>
+<< /Length 2513 >>
 stream
 BT
 /F1 10 Tf
@@ -212,6 +212,10 @@ T*
 T*
 () Tj
 T*
+(Live product URL: https://northstar-college-finder-jxrcmjsr0.vercel.app) Tj
+T*
+() Tj
+T*
 (Production environment variables:) Tj
 T*
 () Tj
@@ -225,10 +229,6 @@ T*
 () Tj
 T*
 (Backend:) Tj
-T*
-() Tj
-T*
-(DATABASE_URL=postgresql://...) Tj
 ET
 BT /F1 8 Tf 522 28 Td (Page 2) Tj ET
 endstream
@@ -237,13 +237,17 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
 endobj
 8 0 obj
-<< /Length 1249 >>
+<< /Length 1274 >>
 stream
 BT
 /F1 10 Tf
 12 TL
 54 736 Td
-(FRONTEND_URL=https://college-frontend-git-main-maruthichethan9-6326s-projects.vercel.app) Tj
+() Tj
+T*
+(DATABASE_URL=postgresql://...) Tj
+T*
+(FRONTEND_URL=https://northstar-college-finder-jxrcmjsr0.vercel.app) Tj
 T*
 (PORT=4000) Tj
 T*
@@ -316,11 +320,11 @@ xref
 0000000197 00000 n 
 0000002549 00000 n 
 0000002675 00000 n 
-0000005198 00000 n 
-0000005324 00000 n 
-0000006625 00000 n 
+0000005240 00000 n 
+0000005366 00000 n 
+0000006692 00000 n 
 trailer
 << /Size 10 /Root 1 0 R >>
 startxref
-6751
+6818
 %%EOF

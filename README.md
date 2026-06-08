@@ -275,6 +275,10 @@ CI currently does:
 
 ## Deployment
 
+Live product URL:
+
+- [https://northstar-college-finder-jxrcmjsr0.vercel.app](https://northstar-college-finder-jxrcmjsr0.vercel.app)
+
 ### Frontend: Vercel
 
 Create a Vercel project from the GitHub repo with:
@@ -308,7 +312,7 @@ npm run start
 
 ```env
 DATABASE_URL=your_hosted_postgres_url
-FRONTEND_URL=https://your-vercel-app.vercel.app
+FRONTEND_URL=https://northstar-college-finder-jxrcmjsr0.vercel.app
 ```
 
 Blueprint file included:

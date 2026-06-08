@@ -61,6 +61,8 @@ Frontend target: Vercel
 Backend target: Render
 Database target: Hosted PostgreSQL through Supabase
 
+Live product URL: https://northstar-college-finder-jxrcmjsr0.vercel.app
+
 Production environment variables:
 
 Frontend:
@@ -73,7 +75,7 @@ Backend:
 
 ```env
 DATABASE_URL=postgresql://...
-FRONTEND_URL=https://college-frontend-git-main-maruthichethan9-6326s-projects.vercel.app
+FRONTEND_URL=https://northstar-college-finder-jxrcmjsr0.vercel.app
 PORT=4000
 ```
 
