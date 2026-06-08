@@ -1,0 +1,326 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2300 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+/F1 14 Tf
+(Technical Notes) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Project: College Decision Platform) Tj
+T*
+(Date: 2026-06-08) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Architecture Decisions) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(The project uses a full-stack split between a Next.js frontend and an Express + TypeScript) Tj
+T*
+(backend. The frontend owns the user experience, routing, filters, compare state, and form) Tj
+T*
+(interactions. The backend owns validation, database queries, authentication flow, saved) Tj
+T*
+(colleges, and response consistency.) Tj
+T*
+() Tj
+T*
+(The backend is layered into controllers, routes, services, models, and utilities.) Tj
+T*
+(Controllers keep request/response logic thin, services contain database logic, and utilities) Tj
+T*
+(handle shared concerns such as validation, auth extraction, API responses, and database) Tj
+T*
+(connection setup.) Tj
+T*
+() Tj
+T*
+(PostgreSQL is used as the source of truth. Colleges, courses, users, and saved colleges are) Tj
+T*
+(modeled relationally. Courses are connected to colleges through a join table so the platform) Tj
+T*
+(can support course-aware search and filtering instead of treating course names as hardcoded) Tj
+T*
+(UI text.) Tj
+T*
+() Tj
+T*
+(The API always returns a consistent shape:) Tj
+T*
+() Tj
+T*
+({) Tj
+T*
+(  "success": true,) Tj
+T*
+(  "data": {}) Tj
+T*
+(}) Tj
+T*
+() Tj
+T*
+(Errors use:) Tj
+T*
+() Tj
+T*
+({) Tj
+T*
+(  "success": false,) Tj
+T*
+(  "message": "Error message") Tj
+T*
+(}) Tj
+T*
+() Tj
+T*
+(The frontend does not hardcode college data. It fetches listing data, detail data, saved) Tj
+T*
+(colleges, compare data, and filter metadata from the backend.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Key Tradeoffs) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Authentication is intentionally lightweight for the MVP. A user can login/register with name) Tj
+T*
+(and email, and the backend creates or returns that user. This is enough to support) Tj
+T*
+(user-specific saved colleges, but a production version should use password auth, OAuth, or a) Tj
+T*
+(managed provider such as Clerk, Supabase Auth, or Auth0.) Tj
+T*
+() Tj
+T*
+(The search implementation is SQL-based and covers college name, city, state, and course) Tj
+T*
+(names. This is appropriate for the current dataset and MVP scope. At larger scale, the next) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 1) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 2471 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(step would be PostgreSQL full-text search, trigram indexes, or a search service.) Tj
+T*
+() Tj
+T*
+(Pagination uses LIMIT/OFFSET because it is simple and clear for an MVP. For much larger) Tj
+T*
+(datasets or deep pagination, cursor pagination would be more scalable.) Tj
+T*
+() Tj
+T*
+(The compare system supports 2 to 3 colleges. This keeps the UX readable on desktop and) Tj
+T*
+(mobile. More colleges would create wide, hard-to-read tables and reduce decision clarity.) Tj
+T*
+() Tj
+T*
+(The product uses a rule-based decision score rather than machine learning. This keeps) Tj
+T*
+(recommendations explainable and easy to debug. A later version could add personalized) Tj
+T*
+(ranking based on user preferences, saved behavior, and exam profile.) Tj
+T*
+() Tj
+T*
+(Some data fields are nullable, especially placement percentage and average package. The UI) Tj
+T*
+(displays "Data not available" instead of assuming zero or hiding the field. This avoids) Tj
+T*
+(misleading students.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(What Was Optimized For) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(The main optimization was clarity. The platform shows the few metrics students need first:) Tj
+T*
+(rating, fees, placement, average package, ranking, and available courses.) Tj
+T*
+() Tj
+T*
+(The second optimization was speed. Listing pages use pagination, backend filters are) Tj
+T*
+(query-driven, filter options are fetched through metadata endpoints, and the frontend avoids) Tj
+T*
+(redundant hardcoded data.) Tj
+T*
+() Tj
+T*
+(The third optimization was decision support. The app supports search, filtering, detail) Tj
+T*
+(view, compare, save, and login-backed shortlist flow. The compare page highlights stronger) Tj
+T*
+(values so users can make decisions faster.) Tj
+T*
+() Tj
+T*
+(The fourth optimization was maintainability. The codebase is split into reusable frontend) Tj
+T*
+(components and backend service layers, so new entities such as exams, reviews, rankings, and) Tj
+T*
+(predictors can be added without rewriting the entire app.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Deployment Notes) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Frontend target: Vercel) Tj
+T*
+(Backend target: Render) Tj
+T*
+(Database target: Hosted PostgreSQL through Supabase) Tj
+T*
+() Tj
+T*
+(Production environment variables:) Tj
+T*
+() Tj
+T*
+(Frontend:) Tj
+T*
+() Tj
+T*
+(NEXT_PUBLIC_API_URL=https://college-iku0.onrender.com) Tj
+T*
+() Tj
+T*
+(Backend:) Tj
+T*
+() Tj
+T*
+(DATABASE_URL=postgresql://...) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 1249 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(FRONTEND_URL=https://college-frontend-git-main-maruthichethan9-6326s-projects.vercel.app) Tj
+T*
+(PORT=4000) Tj
+T*
+() Tj
+T*
+(The backend exposes `/health` for deployment verification. The expected response is:) Tj
+T*
+() Tj
+T*
+({) Tj
+T*
+(  "success": true,) Tj
+T*
+(  "data": {) Tj
+T*
+(    "status": "ok") Tj
+T*
+(  }) Tj
+T*
+(}) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Known Limitations and Next Steps) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(The MVP does not yet include exam pages, review submission, full predictors, or) Tj
+T*
+(article/content pages. These were included in the research model so the system can grow in) Tj
+T*
+(that direction.) Tj
+T*
+() Tj
+T*
+(The current database contains sample demo data. A production version should add verified) Tj
+T*
+(data ingestion, source tracking, update timestamps, and confidence labels for fees and) Tj
+T*
+(placements.) Tj
+T*
+() Tj
+T*
+(The current auth flow is suitable for assignment demonstration, but production auth should) Tj
+T*
+(be hardened before real users are onboarded.) Tj
+T*
+() Tj
+T*
+(The current compare score is rule-based. The next version should allow users to weight) Tj
+T*
+(affordability, placement, location, and course preference.) Tj
+T*
+() Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 3) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000127 00000 n 
+0000000197 00000 n 
+0000002549 00000 n 
+0000002675 00000 n 
+0000005198 00000 n 
+0000005324 00000 n 
+0000006625 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+6751
+%%EOF

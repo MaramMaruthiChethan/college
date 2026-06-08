@@ -1,0 +1,1222 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R] /Count 11 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Length 2260 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+/F1 14 Tf
+(Part 1 Research + Reverse Engineering) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Project: College Decision Platform) Tj
+T*
+(Date: 2026-06-08) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Objective) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(This document deconstructs the college discovery ecosystem across Collegedunia, Careers360,) Tj
+T*
+(Shiksha, GetMyUni, and Zollege. The goal is to understand the product surface, the data) Tj
+T*
+(behind each page, and the backend model needed to rebuild a cleaner decision-first MVP.) Tj
+T*
+() Tj
+T*
+(The product direction is not to clone any competitor. The opportunity is to reduce clutter,) Tj
+T*
+(make comparison easier, and help students move from discovery to shortlist faster.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(1. Page Architecture Breakdown) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Major page types found across the ecosystem:) Tj
+T*
+() Tj
+T*
+(1. Homepage) Tj
+T*
+(2. College listing pages) Tj
+T*
+(3. College detail pages) Tj
+T*
+(4. Course pages) Tj
+T*
+(5. Exam pages) Tj
+T*
+(6. Tools: predictors, compare, finder) Tj
+T*
+(7. Rankings and collections) Tj
+T*
+(8. Q&A and community) Tj
+T*
+(9. Articles and content) Tj
+T*
+(10. User features: login, saved colleges, profile, alerts) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(2. Feature + Data Deconstruction) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Homepage) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Help users start discovery through search, category navigation, and prominent) Tj
+T*
+(entry points such as colleges, exams, courses, rankings, and tools.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Global search for colleges, courses, exams, and articles) Tj
+T*
+(- Category navigation by stream such as engineering, MBA, medical, law, arts, design) Tj
+T*
+(- Popular colleges, popular exams, and featured rankings) Tj
+T*
+(- Tool entry points such as predictor, compare, finder, and counselling) Tj
+T*
+(- Login and user account entry) Tj
+T*
+(- SEO content blocks and high-intent links) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Search index terms: college name, course name, exam name, city, state, stream) Tj
+T*
+(- Featured college fields: name, city, state, rating, fees, ranking, placement summary) Tj
+T*
+(- Featured course fields: course name, degree, stream, duration, average fees) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 1) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
+endobj
+6 0 obj
+<< /Length 2303 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(- Featured exam fields: exam name, application date, exam date, mode, accepted colleges) Tj
+T*
+(- User state: logged in, saved count, recent searches) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Search service should query colleges, courses, and exams) Tj
+T*
+(- Homepage data should be cacheable and read-optimized) Tj
+T*
+(- Featured blocks should be CMS/config driven, not hardcoded in UI) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: College Listing Page) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Let students discover and shortlist colleges using search, filters, sorting,) Tj
+T*
+(pagination, and comparison.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Search by college name, city, state, course, or exam) Tj
+T*
+(- Filters for location, course, fees, exams accepted, rating, ranking, ownership, and) Tj
+T*
+(placement) Tj
+T*
+(- Sorting by rating, fees, ranking, popularity, placement, or relevance) Tj
+T*
+(- Paginated college cards) Tj
+T*
+(- Save/bookmark action) Tj
+T*
+(- Compare selection) Tj
+T*
+(- Empty state when no results match) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- College card: id, name, city, state, ownership, rating, ranking, fees range, placement) Tj
+T*
+(percentage, average package, accepted exams, course tags, review count) Tj
+T*
+(- Filter metadata: cities, states, courses, exams, fee ranges, rating ranges) Tj
+T*
+(- Pagination: page, limit, total, total pages) Tj
+T*
+(- User-specific fields: saved status, compare selected status) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Listing API must support indexed filtering and pagination) Tj
+T*
+(- Search should cover college name, location, and related course names) Tj
+T*
+(- Filter options should come from API metadata, not frontend constants) Tj
+T*
+(- Null placement/package data must be returned safely and displayed as unavailable) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: College Detail Page) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Give a structured decision view for one college so the student can judge fit) Tj
+T*
+(without opening many tabs.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Top summary with rating, fees, placement, average package, ranking) Tj
+T*
+(- Location and overview) Tj
+T*
+(- Courses offered) Tj
+T*
+(- Fees and eligibility) Tj
+T*
+(- Admission process) Tj
+T*
+(- Exams accepted) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 2) Tj ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
+endobj
+8 0 obj
+<< /Length 2254 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(- Placement snapshot) Tj
+T*
+(- Reviews and student sentiment) Tj
+T*
+(- Facilities and campus highlights) Tj
+T*
+(- Similar colleges) Tj
+T*
+(- Save and compare actions) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- College: id, name, description, city, state, address, ownership, established year,) Tj
+T*
+(accreditation, affiliation) Tj
+T*
+(- Metrics: rating, ranking, fees range, placement percentage, average package, highest) Tj
+T*
+(package) Tj
+T*
+(- Courses: course id, name, stream, degree, duration, annual fee, eligibility, seats) Tj
+T*
+(- Exams: exam id, name, cutoff, application status, accepted course) Tj
+T*
+(- Reviews: rating, title, text, reviewer profile, created date, sentiment tags) Tj
+T*
+(- Facilities: hostel, library, labs, sports, transport, medical, wifi) Tj
+T*
+(- Decision tags: affordable, high placement, strong rating, premium fees, data incomplete) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Detail endpoint should aggregate college, courses, exams, and decision tags) Tj
+T*
+(- Detail view should tolerate missing placement or package fields) Tj
+T*
+(- Courses and exams should be modeled as relationships, not text blobs) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Course Pages) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Help users understand a course category and find colleges offering it.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Course overview) Tj
+T*
+(- Eligibility and duration) Tj
+T*
+(- Average fees) Tj
+T*
+(- Career outcomes) Tj
+T*
+(- Top colleges offering course) Tj
+T*
+(- Exams required) Tj
+T*
+(- Related courses) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Course: id, name, stream, degree, duration, description) Tj
+T*
+(- Course-college relationship: college id, course id, annual fee, seats, eligibility) Tj
+T*
+(- Outcome fields: common roles, salary range, placement relevance) Tj
+T*
+(- Exams: required or accepted exams for admission) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Course pages require many-to-many relationship between colleges and courses) Tj
+T*
+(- Course filters should reuse listing API logic) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Exam Pages) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Help students understand entrance exams and discover colleges accepting them.) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 3) Tj ET
+endstream
+endobj
+9 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
+endobj
+10 0 obj
+<< /Length 2269 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+() Tj
+T*
+(Features:) Tj
+T*
+(- Exam overview) Tj
+T*
+(- Important dates) Tj
+T*
+(- Eligibility) Tj
+T*
+(- Syllabus and pattern) Tj
+T*
+(- Application process) Tj
+T*
+(- Results and counselling) Tj
+T*
+(- College predictor entry) Tj
+T*
+(- Colleges accepting exam) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Exam: id, name, stream, level, mode, conducting body) Tj
+T*
+(- Dates: registration start/end, admit card, exam date, result date, counselling date) Tj
+T*
+(- Exam-college relation: accepted colleges, accepted courses, cutoff ranges) Tj
+T*
+(- Content: syllabus sections, pattern, marking scheme, article links) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Exam data should be normalized because it powers exam pages, listing filters, and) Tj
+T*
+(predictors) Tj
+T*
+(- Date fields should support nulls and stale-date warnings) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Tools: Predictor, Compare, Finder) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Convert raw data into decision support.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- College predictor using rank, exam, category, state, quota, branch preference) Tj
+T*
+(- Compare 2 to 3 colleges side by side) Tj
+T*
+(- College finder using preferences such as budget, course, city, rating, placement) Tj
+T*
+(- Recommendation results with reasoning) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Predictor input: exam id, rank, score, category, domicile, gender, branch, round) Tj
+T*
+(- Predictor output: college id, course id, chance level, previous cutoff, counselling note) Tj
+T*
+(- Compare fields: fees, rating, placement, average package, ranking, courses, exams) Tj
+T*
+(- Finder preferences: location, fee cap, course, minimum rating, placement priority) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Compare endpoint should validate 2 to 3 ids) Tj
+T*
+(- Finder can start rule-based and later become recommendation-driven) Tj
+T*
+(- Predictors require historical cutoff data and should be separated from core college) Tj
+T*
+(listing) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Rankings and Collections) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Organize colleges into intent-based discovery groups such as top engineering) Tj
+T*
+(colleges, best MBA colleges in Hyderabad, or affordable private colleges.) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 4) Tj ET
+endstream
+endobj
+11 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
+endobj
+12 0 obj
+<< /Length 1848 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+() Tj
+T*
+(Features:) Tj
+T*
+(- SEO-friendly collection pages) Tj
+T*
+(- Ranking tables) Tj
+T*
+(- Filters within rankings) Tj
+T*
+(- College cards or table rows) Tj
+T*
+(- Editorial notes and methodology) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Collection: id, slug, title, stream, city/state, ranking source, description) Tj
+T*
+(- Ranking: college id, rank, source, year, category) Tj
+T*
+(- College summary: name, location, fees, rating, placement, ownership) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Collections can be generated from filters or stored as curated pages) Tj
+T*
+(- Ranking source and year must be stored to avoid misleading users) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Q&A / Community) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Let students ask admission, course, exam, and college-specific questions.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Ask question) Tj
+T*
+(- Answer threads) Tj
+T*
+(- College/course/exam tagging) Tj
+T*
+(- Upvotes or helpful marks) Tj
+T*
+(- Moderation) Tj
+T*
+(- Related questions on detail pages) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Question: id, title, body, user id, tags, college id, course id, exam id, created date) Tj
+T*
+(- Answer: id, question id, user id, body, helpful count, verified flag) Tj
+T*
+(- User: name, role, credibility score) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Community content is user-generated and requires moderation fields) Tj
+T*
+(- Tags connect questions back to discovery pages) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: Articles / Content) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Capture informational searches and guide students into colleges, exams, rankings,) Tj
+T*
+(and tools.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- News and guides) Tj
+T*
+(- Admission updates) Tj
+T*
+(- Exam result updates) Tj
+T*
+(- College/course explainers) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 5) Tj ET
+endstream
+endobj
+13 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 12 0 R >>
+endobj
+14 0 obj
+<< /Length 1651 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(- Related college and exam widgets) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- Article: id, title, slug, body, category, author, published date, updated date) Tj
+T*
+(- Relations: college ids, course ids, exam ids, city/state tags) Tj
+T*
+(- SEO fields: meta title, meta description, canonical URL) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Content should be a separate CMS-like model) Tj
+T*
+(- Related entities should be stored as references so articles can drive discovery) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Page: User Features) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Objective: Preserve user intent across sessions and support shortlisting.) Tj
+T*
+() Tj
+T*
+(Features:) Tj
+T*
+(- Login/register) Tj
+T*
+(- Saved colleges) Tj
+T*
+(- Saved searches) Tj
+T*
+(- Compare history) Tj
+T*
+(- Alerts for exams/admissions) Tj
+T*
+(- Profile preferences) Tj
+T*
+() Tj
+T*
+(Data Points:) Tj
+T*
+(- User: id, name, email, created date) Tj
+T*
+(- Saved college: user id, college id, created date) Tj
+T*
+(- Preference: user id, course, city, max fees, minimum rating) Tj
+T*
+(- Alert: user id, entity type, entity id, event type) Tj
+T*
+() Tj
+T*
+(Backend Thinking:) Tj
+T*
+(- Saved colleges require user-specific queries) Tj
+T*
+(- MVP can use lightweight email login, but production should use secure auth) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(3. Data Model Thinking) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+/F1 14 Tf
+(Core Entities) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(College:) Tj
+T*
+(- id) Tj
+T*
+(- name) Tj
+T*
+(- slug) Tj
+T*
+(- city) Tj
+T*
+(- state) Tj
+T*
+(- address) Tj
+T*
+(- ownership) Tj
+T*
+(- established_year) Tj
+T*
+(- accreditation) Tj
+T*
+(- affiliation) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 6) Tj ET
+endstream
+endobj
+15 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 14 0 R >>
+endobj
+16 0 obj
+<< /Length 963 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(- fees_range) Tj
+T*
+(- rating) Tj
+T*
+(- placement_percentage) Tj
+T*
+(- avg_package) Tj
+T*
+(- highest_package) Tj
+T*
+(- ranking) Tj
+T*
+(- description) Tj
+T*
+(- created_at) Tj
+T*
+(- updated_at) Tj
+T*
+() Tj
+T*
+(Course:) Tj
+T*
+(- id) Tj
+T*
+(- name) Tj
+T*
+(- slug) Tj
+T*
+(- stream) Tj
+T*
+(- degree) Tj
+T*
+(- duration) Tj
+T*
+(- description) Tj
+T*
+() Tj
+T*
+(CollegeCourse:) Tj
+T*
+(- id) Tj
+T*
+(- college_id) Tj
+T*
+(- course_id) Tj
+T*
+(- annual_fee) Tj
+T*
+(- seats) Tj
+T*
+(- eligibility) Tj
+T*
+(- placement_percentage) Tj
+T*
+() Tj
+T*
+(Exam:) Tj
+T*
+(- id) Tj
+T*
+(- name) Tj
+T*
+(- slug) Tj
+T*
+(- stream) Tj
+T*
+(- level) Tj
+T*
+(- mode) Tj
+T*
+(- conducting_body) Tj
+T*
+(- application_start) Tj
+T*
+(- application_end) Tj
+T*
+(- exam_date) Tj
+T*
+(- result_date) Tj
+T*
+() Tj
+T*
+(CollegeExam:) Tj
+T*
+(- id) Tj
+T*
+(- college_id) Tj
+T*
+(- exam_id) Tj
+T*
+(- course_id) Tj
+T*
+(- cutoff_min) Tj
+T*
+(- cutoff_max) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 7) Tj ET
+endstream
+endobj
+17 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 16 0 R >>
+endobj
+18 0 obj
+<< /Length 900 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(- admission_round) Tj
+T*
+() Tj
+T*
+(User:) Tj
+T*
+(- id) Tj
+T*
+(- name) Tj
+T*
+(- email) Tj
+T*
+(- created_at) Tj
+T*
+(- updated_at) Tj
+T*
+() Tj
+T*
+(SavedCollege:) Tj
+T*
+(- id) Tj
+T*
+(- user_id) Tj
+T*
+(- college_id) Tj
+T*
+(- created_at) Tj
+T*
+() Tj
+T*
+(Review:) Tj
+T*
+(- id) Tj
+T*
+(- user_id) Tj
+T*
+(- college_id) Tj
+T*
+(- course_id) Tj
+T*
+(- rating) Tj
+T*
+(- title) Tj
+T*
+(- body) Tj
+T*
+(- placement_rating) Tj
+T*
+(- faculty_rating) Tj
+T*
+(- campus_rating) Tj
+T*
+(- verified) Tj
+T*
+(- created_at) Tj
+T*
+() Tj
+T*
+(Question:) Tj
+T*
+(- id) Tj
+T*
+(- user_id) Tj
+T*
+(- college_id) Tj
+T*
+(- course_id) Tj
+T*
+(- exam_id) Tj
+T*
+(- title) Tj
+T*
+(- body) Tj
+T*
+(- created_at) Tj
+T*
+() Tj
+T*
+(Answer:) Tj
+T*
+(- id) Tj
+T*
+(- question_id) Tj
+T*
+(- user_id) Tj
+T*
+(- body) Tj
+T*
+(- helpful_count) Tj
+T*
+(- verified) Tj
+T*
+(- created_at) Tj
+T*
+() Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 8) Tj ET
+endstream
+endobj
+19 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 18 0 R >>
+endobj
+20 0 obj
+<< /Length 2672 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(Ranking:) Tj
+T*
+(- id) Tj
+T*
+(- college_id) Tj
+T*
+(- source) Tj
+T*
+(- category) Tj
+T*
+(- year) Tj
+T*
+(- rank) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Relationships) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(- College has many Courses through CollegeCourse) Tj
+T*
+(- College accepts many Exams through CollegeExam) Tj
+T*
+(- Exam maps to many Colleges and Courses) Tj
+T*
+(- User saves many Colleges through SavedCollege) Tj
+T*
+(- User writes many Reviews) Tj
+T*
+(- College has many Reviews) Tj
+T*
+(- College, Course, and Exam can be attached to Questions) Tj
+T*
+(- Ranking belongs to College and is scoped by source/category/year) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Read-Heavy Optimization) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(- Index colleges by city, state, rating, fees_range, and ranking) Tj
+T*
+(- Index many-to-many tables by college_id and course_id) Tj
+T*
+(- Use pagination with LIMIT/OFFSET for MVP) Tj
+T*
+(- Add full-text search or trigram search when data grows) Tj
+T*
+(- Cache metadata endpoints such as filter options) Tj
+T*
+(- Keep listing payload compact and load full details only on detail page) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(4. Competitive Analysis) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(| Platform | Strength | Weakness | Missing |) Tj
+T*
+(|---|---|---|---|) Tj
+T*
+(| Collegedunia | Large SEO footprint, broad college/course/exam coverage, strong) Tj
+T*
+(lead-generation flows | Pages can feel cluttered, heavy content density, decision path is) Tj
+T*
+(not always clear | Cleaner comparison, transparent confidence, fewer distractions, faster) Tj
+T*
+(shortlist workflow |) Tj
+T*
+(| Careers360 | Strong tools ecosystem, predictors, rankings, exam coverage,) Tj
+T*
+(counselling-oriented flows | Tool flows can feel gated or complex, many content paths) Tj
+T*
+(compete for attention | Lightweight decision dashboard, simple compare-first UX, clearer) Tj
+T*
+(explanation of recommendation logic |) Tj
+T*
+(| Shiksha | Deep course and review coverage, strong college/course detail pages, useful) Tj
+T*
+(filters | Review trust can be hard to judge, dense pages, sponsored/lead flows may distract) Tj
+T*
+(| Verified review signals, cleaner metric hierarchy, stronger save-to-decision workflow |) Tj
+T*
+(| GetMyUni | Admission-focused content, college discovery, counselling funnel, simplified) Tj
+T*
+(summaries | Less structured decision tooling, content sometimes feels lead-oriented |) Tj
+T*
+(Stronger comparison, richer structured data, transparent fit scoring |) Tj
+T*
+(| Zollege | Simple college pages, SEO collections, accessible listing style | Shallower) Tj
+T*
+(tooling and decision support compared with larger competitors | Better backend-driven) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 9) Tj ET
+endstream
+endobj
+21 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 20 0 R >>
+endobj
+22 0 obj
+<< /Length 2722 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+(filters, compare, saved lists, recommendation logic |) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Platform-Specific Observations) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(Collegedunia does best at breadth and SEO. It covers colleges, courses, exams, reviews,) Tj
+T*
+(rankings, and admission content at scale. Its weakness is information overload: a student) Tj
+T*
+(often has to interpret many unrelated blocks before making a decision.) Tj
+T*
+() Tj
+T*
+(Careers360 does best at tools such as college predictors, rank predictors, comparisons, and) Tj
+T*
+(counselling journeys. Its weakness is complexity: tool flows require many inputs and can) Tj
+T*
+(feel heavier than needed for early-stage exploration.) Tj
+T*
+() Tj
+T*
+(Shiksha does best at structured course/college information and reviews. Its weakness is) Tj
+T*
+(trust and clarity: students may struggle to understand which reviews are reliable and which) Tj
+T*
+(metrics matter most.) Tj
+T*
+() Tj
+T*
+(GetMyUni does best at admission-oriented discovery and guidance. Its weakness is weaker) Tj
+T*
+(decision tooling: compare and shortlist flows are not as central as they should be.) Tj
+T*
+() Tj
+T*
+(Zollege does best at simpler SEO-driven discovery pages. Its weakness is data depth and) Tj
+T*
+(product tooling: it is useful for browsing but less strong for actual decision-making.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Market Gaps) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(1. Weak comparison UX: Most platforms provide comparison, but it is usually table-heavy and) Tj
+T*
+(not decision-ranked.) Tj
+T*
+(2. Low personalization: Discovery is mostly filter-based, not preference-based.) Tj
+T*
+(3. Poor decision support: Users see many facts but few clear conclusions.) Tj
+T*
+(4. Cluttered pages: Lead forms, ads, articles, rankings, and widgets often compete with the) Tj
+T*
+(student decision.) Tj
+T*
+(5. Missing data confidence: Platforms do not clearly show whether placement/package data is) Tj
+T*
+(missing, estimated, stale, or verified.) Tj
+T*
+(6. Shortlisting is underpowered: Saved colleges often behave like bookmarks, not a decision) Tj
+T*
+(workspace.) Tj
+T*
+(7. Performance friction: Large pages can feel slow because they combine content, ads, tools,) Tj
+T*
+(and widgets.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Product Direction for the MVP) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(The MVP should focus on:) Tj
+T*
+(- Fast college discovery) Tj
+T*
+(- API-driven filters for city and course) Tj
+T*
+(- Clean college cards with decision metrics) Tj
+T*
+(- Detail pages that prioritize rating, fees, placement, and package) Tj
+T*
+(- Compare flow for 2 to 3 colleges) Tj
+T*
+(- User-specific saved colleges) Tj
+T*
+(- Missing-data fallbacks) Tj
+T*
+(- Consistent backend responses) Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 10) Tj ET
+endstream
+endobj
+23 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 22 0 R >>
+endobj
+24 0 obj
+<< /Length 695 >>
+stream
+BT
+/F1 10 Tf
+12 TL
+54 736 Td
+() Tj
+T*
+(This creates a narrower but clearer product than the incumbents. The build prioritizes) Tj
+T*
+(decision speed over content volume.) Tj
+T*
+() Tj
+T*
+/F1 14 Tf
+(Sources Reviewed) Tj
+/F1 10 Tf
+T*
+() Tj
+T*
+(- Collegedunia: https://collegedunia.com/) Tj
+T*
+(- Careers360: https://www.careers360.com/) Tj
+T*
+(- Shiksha: https://www.shiksha.com/) Tj
+T*
+(- GetMyUni: https://www.getmyuni.com/) Tj
+T*
+(- Zollege: https://zollege.in/) Tj
+T*
+(- Careers360 College Predictor examples:) Tj
+T*
+(https://engineering.careers360.com/jee-main-college-predictor) Tj
+T*
+(- Supplied assignment brief and product requirements) Tj
+T*
+() Tj
+ET
+BT /F1 8 Tf 522 28 Td (Page 11) Tj ET
+endstream
+endobj
+25 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 24 0 R >>
+endobj
+xref
+0 26
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000184 00000 n 
+0000000254 00000 n 
+0000002566 00000 n 
+0000002692 00000 n 
+0000005047 00000 n 
+0000005173 00000 n 
+0000007479 00000 n 
+0000007605 00000 n 
+0000009927 00000 n 
+0000010055 00000 n 
+0000011956 00000 n 
+0000012084 00000 n 
+0000013788 00000 n 
+0000013916 00000 n 
+0000014931 00000 n 
+0000015059 00000 n 
+0000016011 00000 n 
+0000016139 00000 n 
+0000018864 00000 n 
+0000018992 00000 n 
+0000021767 00000 n 
+0000021895 00000 n 
+0000022642 00000 n 
+trailer
+<< /Size 26 /Root 1 0 R >>
+startxref
+22770
+%%EOF
